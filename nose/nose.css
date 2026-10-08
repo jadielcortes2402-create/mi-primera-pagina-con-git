@@ -1,0 +1,22 @@
+
+.caja{
+    width: 100px;
+    height: 100px;
+    background: #8c54fb ;
+    box-sizing: border-box;
+}
+
+.content-box{
+padding: 20px;
+border: 10px solid #8c54fb;
+}
+
+.overflow-box{
+    width: 100px;
+    height: 100px;
+    background:#8c54fb;
+    overflow: scroll;
+    overflow-x: hidden;
+    padding: 100px 50px 100px 50px;
+    border: 4px solid crimson;
+}
