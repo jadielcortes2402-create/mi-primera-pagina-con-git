@@ -1,5 +1,6 @@
 body {
     color: black;
+    background: #8c54fb;
 }
 
 .caja {
@@ -68,7 +69,59 @@ div {
     gap: 10px;
     justify-content:center;
 }
+button{
+display: flex;
+justify-content: center;
+align-items: center;
+justify-content: space-between;
+gap:20px;
+padding: 10px 20px;
+cursor: all-scroll;
+width:300px;
+height: 250px;
+}
 
+button li{
+display: flex;
+justify-content: center;
+align-items: center;
+justify-content: space-between;
+gap:20px;
+padding: 10px 20px;
+cursor: all-scroll;
+width:300px;
+height: 250px;
+list-style: none;
+}
 
+li a{
+display: flex;
+justify-content: center;
+align-items: center;
+justify-content: space-between;
+gap:20px;
+padding: 10px 20px;
+cursor: all-scroll;
+width:300px;
+height: 250px;
+animation: alternate-reverse;
+}
 
+button textarea{
+display: flex;
+justify-content: center;
+align-items: center;
+justify-content: space-between;
+gap:20px;
+padding: 10px 20px;
+cursor: text;
+width:200px;
+height: 150px;
+overflow: scroll;
+}
 
+.j{
+    background: radial-gradient(rgb(185, 66, 66) rgb(36, 35, 35));
+    width: 200px;
+    height: 200px;
+}

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Edu+QLD+Hand:wght@400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+
 :root{
     --backgroud:#02050e;
     --primary:#1e50ff;
@@ -30,7 +31,9 @@
 
 body{
     background: var(--backgroud);
+    overflow: scroll;
 }
+
 /*header*/
 
 header{
@@ -39,6 +42,8 @@ header{
     justify-content: space-between;
     align-items: center;
     padding: 20px 30px ;
+    position: sticky;
+    top: 0;
 }
 
 .navbar,
@@ -194,7 +199,6 @@ justify-content: space-between;
 }
 
 /*info section*/
-
 #info{
     max-width: 1200px;
     padding: 70px 0;
@@ -246,3 +250,264 @@ justify-content: space-between;
 
 /*Discover Section*/
 
+#discover{
+    max-width: 1200px;
+    padding: 70px 0;
+}
+
+.discover-info{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.discover-info h2{
+    width: 45%;
+    font-size: 32px;
+    font-weight: 800;
+}
+
+.discover-text{
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.discover-text p{
+    font-weight: 300;
+    color: var(--text-gray);
+}
+
+.discover-text a{
+    color: var(--text-white);
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.discover-cards{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.discover-cards img{
+    width: 30%;
+}
+
+.yoda{
+ width: 370px;
+ height: 352px;
+ align-items: center;
+ justify-content: center;
+}
+
+.tropper{
+ width: 370px;
+ height: 352px;
+ align-items: center;
+ justify-content: center;
+}
+
+.darth-vader{
+ width: 370px;
+ height: 352px;
+ align-items: center;
+ justify-self: center;
+}
+
+  /*section-products*/
+  #products{
+    max-width: 1200px;
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 70px 0;
+  }
+
+  #products h2{
+    font-size: 32px;
+    font-weight: 800;
+  }
+
+  .categories{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .category{
+    background: var(--btn-bg);
+    color: var(--text-white);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: not-allowed;
+  }
+
+  .active{
+    background: var(--primary);
+    cursor: pointer;
+  }
+
+/*productos*/
+
+  .products-container{
+    display: flex;
+    flex-wrap:wrap ;
+    justify-content:center ;
+    align-items: center;
+    gap: 20px;
+    padding: 40px 0;
+  }
+
+.product{
+    background: var(--secondary);
+    padding: 20px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.product-info{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.product-mid,
+.product-bot{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-top h3{
+    font-size:16px ;
+    font-weight: 600;
+}
+.product-top p,
+.product-user{
+    font-weight: 400;
+    color: var(--text-gray);
+}
+
+.product-user{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.product-mid p{
+font-weight: 800;
+}
+
+.offer-time{
+    display:flex ;
+    align-items: center;
+    gap: 10px;
+    font-weight: 400;
+}
+
+.offer-time img{
+    width: 20px;
+}
+
+.btn-add{
+    background: var(--primary);
+    border: none;
+    color: var(--text-white);
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+
+}
+
+.name{
+position: relative;
+right: 179px;
+}
+
+.kiri{
+    position: relative;
+    right: 230px;
+}
+
+.f{
+    position: relative;
+    right: 230px;
+}
+
+.ura{
+    position: relative;
+    right: 190px;
+}
+
+.guli{
+    position: relative;
+    right: 210px;
+}
+
+.bena{
+    position: relative;
+    right: 195px;
+}
+
+.price{
+    position: relative;
+    left: 270px;
+    bottom: 25px;
+    color: var(--text-white);
+}
+
+.mas{
+    background: none;
+    color: var(--text-white);
+    border:solid var(--electric);
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor:pointer ;
+}
+
+/*footer-section*/
+
+footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 70px;
+}
+
+footer a{
+    color: var(--text-gray);
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.p{
+    display: flex;
+    flex-direction: column;
+    color: var(--text-gray);
+        font-weight: 300;
+    font-size: 14px;
+    position: relative;
+    top: 47px;
+    right: 254px;
+}
+
+.fl{
+    display: flex;
+    gap:30px ;
+}
+
+footer span{
+    font-weight: 800;
+}
