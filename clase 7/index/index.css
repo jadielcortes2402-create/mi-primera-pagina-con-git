@@ -37,13 +37,13 @@ body{
 /*header*/
 
 header{
-    background: #272d37;
+    position: fixed;
+    width:100% ;
+    background:linear-gradient(to right bottom, #121e3c, var(--backgroud));
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 30px ;
-    position: sticky;
-    top: 0;
 }
 
 .navbar,
@@ -103,7 +103,10 @@ main{
 .hero-info h1{
     font-size: 48px;
     font-weight: 800;
-    color: var(--text-white);
+    background: linear-gradient(to top, #30cfd0, #c43ad6);
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip:text;
 }
 
 .hero-info p{
@@ -510,4 +513,267 @@ footer a{
 
 footer span{
     font-weight: 800;
+}
+
+.menu-a{
+    display: none;
+    width: 25px;
+    height: 20px;
+    object-fit: contain;
+    cursor: pointer;
+}
+
+#menu-togle{
+    display: none;
+}
+
+.cart-toggle{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.cart-icon{
+    display: block;
+    width: 28px;
+    height: 28px;
+}
+
+#cart-icon{
+    display: none;
+}
+
+/* carrito */
+.cart-panel{
+    position: absolute;
+    top: 65px;
+    right: 0;
+    width: min(420px, 100vw);
+    height: calc(100vh - 65px);
+    padding: 50px 30px;
+    display: none;
+    flex-direction: column;
+    gap: 30px;
+    overflow-y: auto;
+    color: var(--text-white);
+    background: linear-gradient(to top, #121e3c, var(--backgroud));
+    z-index: 10;
+}
+
+cart h2{
+    color: var(--text-white);
+    font-size: 20px;
+    font-weight: 600;
+}
+
+#cart-icon:checked ~ .cart-panel{
+    display: flex;
+}
+
+.cart-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background: #131415;
+    border:1px solid var(--electric);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.cart-item > img{
+    height: 65px;
+    width: 65px;
+    flex: 0 0 65px;
+    object-fit: cover;
+}
+
+.items-info{
+    display: flex;
+    flex-direction: column;
+}
+
+.item-title{
+    color: var(--text-white);
+    font-size: 14px;
+}
+
+.item-bid{
+    color: var(--text-gray);
+    font-size: 12px;
+}
+
+.item-price{
+    background: linear-gradient(to right, #30cfd0, #c43ad6);
+    background-clip:text ;
+    color: transparent;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.item-handler{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.quantity-handler{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 9px;
+    border-radius: 5px;
+    color: var(--text-white);
+}
+
+.item-quantity{
+    color: var(--text-gray);
+}
+
+.up{
+    border:1px solid var(--electric);
+}
+
+.down{
+    background: var(--secondary);
+    border: 1px solid var(--electric);
+}
+
+.divider{
+    display: block;
+    width: 100%;
+    border-top: 1px solid var(--electric);
+}
+
+.cart-total{
+    display: flex;
+    color: var(--text-white);
+    justify-content: center;
+    align-items: center;
+}
+
+@media(max-width: 992px) {
+
+    .navbar{
+        gap: 30px;
+    }
+
+    .navbar-list{
+        display: none;
+        position: absolute;
+        top: 65px;
+        flex-direction: column;
+        width: 90%;
+        background: var(--nav-bg);
+        left: 5%;
+        right: 5%;
+        border: 1px solid var(--electric);
+        border-top: 0;
+        border-radius: 0 0 15px 15px;
+        gap: 25px;
+        padding: 45px 0;
+    }
+
+
+    .menu-a{
+        display: block;
+        order: 2;
+    }
+
+    .navbar-list a{
+        font-size: 1.2rem;
+    }
+
+#menu-togle:checked ~ .navbar-list{
+    display: flex;
+}
+
+    .hero-info{
+     width: 100%;
+     text-align: center;
+     justify-content: center;
+     gap: 40px;
+     padding-top: 70px;
+    }
+   
+.hero-info h1{
+    max-width: 500px;
+}
+
+.hero-info p{
+    max-width: 600px;
+}
+
+    .hero-card{
+    display: none;
+    }
+
+    .info-cards-container{
+        max-width: 90%;
+flex-wrap: wrap;
+align-content: center;
+justify-content: center;
+    }
+
+.discover-info{
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 40px;
+}
+
+.discover-text{
+    gap: 40px;
+
+}
+
+.discover-cards{
+    max-width: 90%;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.discover-cards img{
+    width: 40%;
+}
+
+.yoda{
+    position: relative;
+    left: 185px;
+}
+
+.product{
+    max-width: 300px;
+}
+}
+
+@media(max-width: 576px){
+    .hero-info p{
+        font-size: 1rem;
+    }
+
+    #info h2{
+        max-width: 70%;
+        text-align: center;
+    }
+
+#discover h2{
+width: 100%;
+}
+
+.discover-text{
+    width: 100%;
+}
+
+.discover-cards{
+    flex-direction: column;
+}
+
+.footer-links{
+    flex-direction: column;
+    text-align: center;
+}
+
 }

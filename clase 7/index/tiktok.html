@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kerenstudio</title>
     <link rel="stylesheet" href="./keren.css">
+    <link rel="stylesheet" href="./carrito.css">
 </head>
 <body>
     <header>
@@ -18,7 +19,45 @@
                 <li class="text"> <a href="./contacto.html">contacto</a></li>
             </ul>
 
-               <img src="./assets/cart-icon.svg"alt="" class="cart-icon">
+            <label for="cart-icon" class="cart-toggle">
+                <img src="./assets/cart-icon.svg" alt="Abrir carrito" class="cart-icon">
+            </label>
+            <input type="checkbox" id="cart-icon">
+            <div class="cart-panel">
+                <h2>Tus productos</h2>
+                <div class="cart-item">
+                    <img src="./assets/taza-personalizada.png" alt="Taza personalizada">
+                    <div class="items-info">
+                        <h3 class="item-title">Taza personalizada</h3>
+                        <p class="item-bid">Producto KerenStudio</p>
+                        <span class="item-price">4.800$</span>
+                    </div>
+                    <div class="item-handler">
+                        <span class="quantity-handler down">-</span>
+                        <span class="item-quantity">1</span>
+                        <span class="quantity-handler up">+</span>
+                    </div>
+                </div>
+                <div class="cart-item">
+                    <img src="./assets/mousepad-personalizado.png" alt="Mousepad personalizado">
+                    <div class="items-info">
+                        <h3 class="item-title">Mousepad personalizado</h3>
+                        <p class="item-bid">Producto KerenStudio</p>
+                        <span class="item-price">5.000$</span>
+                    </div>
+                    <div class="item-handler">
+                        <span class="quantity-handler down">-</span>
+                        <span class="item-quantity">1</span>
+                        <span class="quantity-handler up">+</span>
+                    </div>
+                </div>
+                <span class="divider"></span>
+                <div class="cart-total">
+                    <p>Total:</p>
+                    <span>9.800$</span>
+                </div>
+                <button class="btn-add">Comprar</button>
+            </div>
          </nav>
    </header> 
 
