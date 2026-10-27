@@ -4,8 +4,33 @@ header{
 }
 
 .navbar{
-    position: static;
-    gap: clamp(12px, 4vw, 48px);
+    position: relative;
+    gap: clamp(10px, 2vw, 24px);
+}
+
+.navbar-list{
+    gap: clamp(8px, 1.5vw, 18px);
+}
+
+.navbar-list a{
+    white-space: nowrap;
+}
+
+.menu-toggle{
+    display: none;
+    align-items: center;
+    cursor: pointer;
+}
+
+.menu-icon{
+    display: block;
+    width: 25px;
+    height: 20px;
+    object-fit: contain;
+}
+
+#menu-toggle{
+    display: none;
 }
 
 .cart-toggle{
@@ -36,7 +61,7 @@ header{
     padding: 24px;
     overflow-y: auto;
     color: #f3f4f6;
-    background: linear-gradient(to top, #121e3c, #202735);
+    background: linear-gradient(to top, #F8BBD0, pink);
     box-shadow: 0 12px 30px #0005;
 }
 
@@ -132,13 +157,79 @@ header{
     cursor: pointer;
 }
 
-@media (max-width: 760px){
+@media (max-width: 600px){
+    header{
+        gap: 12px;
+        padding: 12px 16px;
+    }
+
+    .logo{
+        width: 52px;
+        height: 52px;
+        object-fit: cover;
+    }
+
     .navbar{
+        flex: 0 0 auto;
         gap: 14px;
+    }
+
+    .menu-toggle{
+        display: flex;
+        order: 1;
+    }
+
+    .cart-toggle{
+        order: 2;
+    }
+
+    .navbar-list{
+        position: absolute;
+        top: calc(100% + 20px);
+        right: 0;
+        z-index: 2;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        width: min(260px, 85vw);
+        padding: 10px 0;
+        border: 1px solid #ffffff30;
+        border-radius: 0 0 10px 10px;
+        background: #F8BBD0;
+        box-shadow: 0 12px 30px #0005;
+    }
+
+    .navbar-list li{
+        width: 100%;
+    }
+
+    .navbar-list a{
+        display: block;
+        padding: 12px 18px;
+    }
+
+    #menu-toggle:checked ~ .navbar-list{
+        display: flex;
     }
 
     .cart-panel{
         right: 0;
         width: min(380px, 100vw);
+        padding: 16px;
+    }
+
+    .cart-item{
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .items-info{
+        min-width: 0;
+    }
+
+    .item-handler{
+        margin-left: auto;
     }
 }

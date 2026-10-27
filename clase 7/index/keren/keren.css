@@ -1,6 +1,6 @@
 body{
-border: solid 1px red ;
-background: linear-gradient(pink )
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f6b9d0, #d37a98, #9b5576);
 }
 
 *{
@@ -34,7 +34,15 @@ header{
 }
 
 .navbar{
-    gap: 150px;
+    gap: clamp(10px, 2vw, 24px);
+}
+
+.navbar-list{
+    gap: clamp(8px, 1.5vw, 18px);
+}
+
+.navbar-list a{
+    white-space: nowrap;
 }
 
 .cart-toggle{
@@ -263,31 +271,57 @@ border-radius: 35px;
    left: 220px;
 }
 
-
-@media (max-width: 1200px) {
- 
+.imagen h1{
+    color: #fff;
 }
 
-@media (max-width: 680px) {
-    .imagen {
-        display: flex;
-        flex-wrap: wrap;
+
+@media (max-width: 600px) {
+    #keren{
+        width: calc(100% - 32px);
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        padding: 32px 0;
     }
 
-    .navbar{
-        background: #d37a98;
-        height: 100px;
-        flex-direction: row;
-        gap: 16px;
+    .keren-info{
+        width: 100%;
+        align-items: center;
+        text-align: center;
     }
 
-    .navbar-list{
-        gap: 10px;
-        flex-wrap: wrap;
+    .keren-info h1{
+        font-size: clamp(32px, 9vw, 42px);
     }
 
-    .cart-panel{
-        right: 0;
-        width: min(380px, 100vw);
+    .keren-info p{
+        width: 100%;
+        max-height: none;
+    }
+
+    #keren > .keren-info > .imagen{
+        width: 100%;
+    }
+
+    #keren .imagen img{
+        width: min(100%, 300px);
+        height: auto;
+        margin: 0 auto;
+    }
+
+    #keren .camisas,
+    #keren .hola,
+    #keren .a,
+    #keren .e{
+        position: static;
+    }
+
+    #keren > .keren-info > .imagen:nth-child(2){
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: center;
+        justify-items: center;
+        gap: 12px;
     }
 }

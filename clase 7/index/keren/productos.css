@@ -102,20 +102,7 @@ header{
   animation-fill-mode: both;
 }
 
-@keyframes slideDownAnimation {
-  0% { transform: translateY(-100px); opacity: 0; }
-  100% { transform: translateY(0); opacity: 1; }
-}
 
-.keren-info {
-  animation-name: slideDownAnimation;
-  animation-duration: 1.1s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: 1;
-  animation-direction: normal;
-  animation-fill-mode: both;
-  animation-delay: 1.1s;
-}
 
 .imagen img{
 width: 300px;
@@ -128,30 +115,124 @@ padding: 20px;
 border-radius: 35px;
 }
 
-.camisas{
+.camisas {
     position: relative;
    left: 450px;
-   bottom: 383px;
+   top: 183px;
 }
 
-.hola{
+.hola {
     position: relative;
-   left: 450px;
-   bottom: 383px;
+   right: 100px;
+   bottom: 107px;
 }
 
 .a{
     position: relative;
-   bottom: 750px;
+   bottom: 280px;
+   right: 100px;
 }
 
 .e{
     position: relative;
-   bottom: 750px;
+   bottom: 80px;
    left: 220px;
 }
 
+.i{
+position: relative;
+bottom: 270px;
+right: 100px;
+}
 
-@media (max-width: 1200px)
-{
+.o{
+position: relative;
+bottom: 470px;
+left: 220px;
+}
+
+.u{
+position: relative;
+bottom: 465px;
+left: 220px;
+}
+
+.b{
+position: relative;
+bottom: 665px;
+right: 95px;
+}
+
+.c{
+position: relative;
+bottom: 655px;
+right: 95px;
+}
+
+.d{
+position: relative;
+bottom: 855px;
+left: 220px;
+}
+
+@media (max-width: 600px){
+    #keren{
+        width: calc(100% - 32px);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+        padding: 32px 0;
+    }
+
+    .keren-info{
+        width: 100%;
+        align-items: center;
+        text-align: center;
+    }
+
+    .keren-info h1{
+        font-size: clamp(32px, 9vw, 42px);
+    }
+
+    .keren-info p{
+        width: 100%;
+        max-height: none;
+    }
+
+    .keren-info > .imagen:first-child{
+        width: 100%;
+    }
+
+    .keren-info > .imagen:nth-child(2){
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        width: 100%;
+    }
+
+    .keren-info > .imagen:nth-child(2) > div{
+        position: static;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+        padding: 10px;
+        border-radius: 12px;
+        background: #ffffff40;
+    }
+
+    .keren-info > .imagen:nth-child(2) img{
+        position: static;
+        width: 100%;
+        max-width: 220px;
+        height: auto;
+        padding: 0;
+    }
+
+    .keren-info > .imagen:nth-child(2) li{
+        position: static;
+        text-align: center;
+        overflow-wrap: anywhere;
+    }
 }

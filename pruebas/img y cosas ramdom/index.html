@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juego HTML</title>
+  <style>
+    :root {
+      --bg1: #0f172a;
+      --bg2: #111827;
+      --panel: rgba(15, 23, 42, 0.8);
+      --primary: #38bdf8;
+      --secondary: #22c55e;
+      --danger: #f87171;
+      --accent: #facc15;
+      --text: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .game-wrap {
+      width: min(92vw, 720px);
+      background: var(--panel);
+      border: 2px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+      padding: 20px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.3rem, 2vw, 2rem);
+      letter-spacing: 1px;
+    }
+
+    .hud {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-weight: bold;
+    }
+
+    .badge {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px;
+      padding: 8px 12px;
+      min-width: 100px;
+      text-align: center;
+    }
+
+    canvas {
+      width: 100%;
+      display: block;
+      background: linear-gradient(180deg, rgba(14,116,144,0.25), rgba(15,23,42,0.85));
+      border-radius: 16px;
+      border: 2px solid rgba(255,255,255,0.06);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 12px 18px;
+      background: linear-gradient(135deg, var(--primary), #2563eb);
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(37,99,235,0.35);
+      transition: transform 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    .legend {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-wrap">
+    <div class="topbar">
+      <h1>🌟 Recolector estelar</h1>
+      <div class="hud">
+        <div class="badge">Puntos: <span id="score">0</span></div>
+        <div class="badge">Vidas: <span id="lives">3</span></div>
+      </div>
+    </div>
+
+    <canvas id="gameCanvas" width="640" height="420"></canvas>
+
+    <div class="controls">
+      <button id="startBtn">Iniciar juego</button>
+      <div class="legend">Mueve la nave con las flechas o WASD</div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const scoreEl = document.getElementById('score');
+    const livesEl = document.getElementById('lives');
+    const startBtn = document.getElementById('startBtn');
+
+    const keys = {};
+    const stars = [];
+    const collectibles = [];
+    const enemies = [];
+
+    let player;
+    let score = 0;
+    let lives = 3;
+    let gameRunning = false;
+    let animationId = null;
+
+    function resetPlayer() {
+      player = {
+        x: canvas.width / 2 - 18,
+        y: canvas.height - 48,
+        width: 36,
+        height: 26,
+        speed: 5
+      };
+    }
+
+    function createStars() {
+      stars.length = 0;
+      for (let i = 0; i < 90; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 2 + 1,
+          speed: Math.random() * 0.8 + 0.2
+        });
+      }
+    }
+
+    function spawnCollectible() {
+      collectibles.push({
+        x: Math.random() * (canvas.width - 24),
+        y: -20,
+        size: 12,
+        speed: Math.random() * 2 + 2,
+        type: Math.random() > 0.2 ? 'coin' : 'bonus'
+      });
+    }
+
+    function spawnEnemy() {
+      enemies.push({
+        x: Math.random() * (canvas.width - 30),
+        y: -30,
+        width: 26,
+        height: 26,
+        speed: Math.random() * 2 + 2.2
+      });
+    }
+
+    function initGame() {
+      resetPlayer();
+      createStars();
+      score = 0;
+      lives = 3;
+      collectibles.length = 0;
+      enemies.length = 0;
+      scoreEl.textContent = score;
+      livesEl.textContent = lives;
+    }
+
+    function startGame() {
+      initGame();
+      gameRunning = true;
+      startBtn.textContent = 'Reiniciar juego';
+      if (animationId) cancelAnimationFrame(animationId);
+      animationLoop();
+    }
+
+    function handleInput() {
+      if (!gameRunning) return;
+
+      if (keys['ArrowLeft'] || keys['a']) player.x -= player.speed;
+      if (keys['ArrowRight'] || keys['d']) player.x += player.speed;
+      if (keys['ArrowUp'] || keys['w']) player.y -= player.speed;
+      if (keys['ArrowDown'] || keys['s']) player.y += player.speed;
+
+      player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
+      player.y = Math.max(0, Math.min(canvas.height - player.height, player.y));
+    }
+
+    function updateStars() {
+      for (const star of stars) {
+        star.y += star.speed;
+        if (star.y > canvas.height) {
+          star.y = -5;
+          star.x = Math.random() * canvas.width;
+        }
+      }
+    }
+
+    function updateCollectibles() {
+      for (let i = collectibles.length - 1; i >= 0; i--) {
+        const item = collectibles[i];
+        item.y += item.speed;
+
+        const hit =
+          item.x < player.x + player.width &&
+          item.x + item.size > player.x &&
+          item.y < player.y + player.height &&
+          item.y + item.size > player.y;
+
+        if (hit) {
+          if (item.type === 'coin') {
+            score += 10;
+          } else {
+            score += 25;
+          }
+          collectibles.splice(i, 1);
+          scoreEl.textContent = score;
+        } else if (item.y > canvas.height + 20) {
+          collectibles.splice(i, 1);
+        }
+      }
+    }
+
+    function updateEnemies() {
+      for (let i = enemies.length - 1; i >= 0; i--) {
+        const enemy = enemies[i];
+        enemy.y += enemy.speed;
+
+        const hit =
+          enemy.x < player.x + player.width &&
+          enemy.x + enemy.width > player.x &&
+          enemy.y < player.y + player.height &&
+          enemy.y + enemy.height > player.y;
+
+        if (hit) {
+          enemies.splice(i, 1);
+          lives -= 1;
+          livesEl.textContent = lives;
+
+          if (lives <= 0) {
+            endGame();
+            return;
+          }
+        } else if (enemy.y > canvas.height + 30) {
+          enemies.splice(i, 1);
+        }
+      }
+    }
+
+    function drawBackground() {
+      ctx.fillStyle = '#020817';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      for (const star of stars) {
+        ctx.beginPath();
+        ctx.fillStyle = 'rgba(255,255,255,0.9)';
+        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function drawPlayer() {
+      ctx.save();
+      ctx.translate(player.x, player.y);
+      ctx.fillStyle = '#38bdf8';
+      ctx.beginPath();
+      ctx.moveTo(player.width / 2, 0);
+      ctx.lineTo(player.width, player.height);
+      ctx.lineTo(player.width / 2, player.height - 6);
+      ctx.lineTo(0, player.height);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.fillStyle = '#facc15';
+      ctx.fillRect(player.width / 2 - 5, player.height - 6, 10, 6);
+      ctx.restore();
+    }
+
+    function drawCollectible(item) {
+      if (item.type === 'coin') {
+        ctx.fillStyle = '#facc15';
+        ctx.beginPath();
+        ctx.arc(item.x + item.size / 2, item.y + item.size / 2, item.size / 2, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        ctx.fillStyle = '#4ade80';
+        ctx.fillRect(item.x, item.y, item.size, item.size);
+        ctx.fillStyle = '#14532d';
+        ctx.fillRect(item.x + 3, item.y + 3, item.size - 6, item.size - 6);
+      }
+    }
+
+    function drawEnemy(enemy) {
+      ctx.fillStyle = '#f87171';
+      ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+      ctx.fillStyle = '#7f1d1d';
+      ctx.fillRect(enemy.x + 4, enemy.y + 7, 6, 6);
+      ctx.fillRect(enemy.x + enemy.width - 10, enemy.y + 7, 6, 6);
+      ctx.fillRect(enemy.x + 8, enemy.y + 17, enemy.width - 16, 4);
+    }
+
+    function drawMessage(text, color = '#e2e8f0') {
+      ctx.fillStyle = 'rgba(2, 6, 23, 0.55)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.textAlign = 'center';
+      ctx.fillStyle = color;
+      ctx.font = 'bold 32px Arial';
+      ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+    }
+
+    function gameLoop() {
+      handleInput();
+      updateStars();
+      updateCollectibles();
+      updateEnemies();
+
+      if (Math.random() < 0.020) spawnCollectible();
+      if (Math.random() < 0.012) spawnEnemy();
+
+      drawBackground();
+      for (const item of collectibles) drawCollectible(item);
+      for (const enemy of enemies) drawEnemy(enemy);
+      drawPlayer();
+
+      if (gameRunning) {
+        animationId = requestAnimationFrame(gameLoop);
+      }
+    }
+
+    function animationLoop() {
+      if (gameRunning) {
+        animationId = requestAnimationFrame(gameLoop);
+      }
+    }
+
+    function endGame() {
+      gameRunning = false;
+      drawMessage('Juego terminado', '#f87171');
+      setTimeout(() => {
+        drawMessage(`Puntaje final: ${score}`, '#facc15');
+      }, 500);
+    }
+
+    startBtn.addEventListener('click', startGame);
+
+    document.addEventListener('keydown', (event) => {
+      keys[event.key] = true;
+      keys[event.key.toLowerCase()] = true;
+    });
+
+    document.addEventListener('keyup', (event) => {
+      keys[event.key] = false;
+      keys[event.key.toLowerCase()] = false;
+    });
+
+    initGame();
+    drawBackground();
+    drawPlayer();
+  </script>
+</body>
+</html>
